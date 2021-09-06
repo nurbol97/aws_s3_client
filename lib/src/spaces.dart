@@ -13,13 +13,13 @@ enum Provider {
 
 class Spaces extends Client {
   final Provider provider;
-  String _endpointUrl;
+  String? _endpointUrl;
   Spaces(
-      {@required String region,
-      @required String accessKey,
-      @required String secretKey,
-      String sessionToken,
-      http.Client httpClient,
+      {required String region,
+      required String accessKey,
+      required String secretKey,
+      String? sessionToken,
+      http.Client? httpClient,
       this.provider = Provider.amazon})
       : super(
             region: region,
@@ -51,8 +51,8 @@ class Spaces extends Client {
   }
 
   Future<List<String>> listAllBuckets() async {
-    xml.XmlDocument doc = await getUri(Uri.parse(_endpointUrl + '/'));
-    List<String> res = List<String>();
+    xml.XmlDocument doc = await getUri(Uri.parse(_endpointUrl! + '/'));
+    List<String> res = <String>[];
     for (xml.XmlElement root in doc.findElements('ListAllMyBucketsResult')) {
       for (xml.XmlElement buckets in root.findElements('Buckets')) {
         for (xml.XmlElement bucket in buckets.findElements('Bucket')) {
